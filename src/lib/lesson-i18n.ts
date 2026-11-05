@@ -9,6 +9,7 @@ export type Fields = {
   note?: string;
   copyLabel?: string;
   choices?: Choice[];
+  pickUrl?: boolean;
 };
 
 const taChoices: Choice[] = [
@@ -47,7 +48,7 @@ export const ta: Record<string, Fields> = {
     title: "இந்த வகுப்பு என்ன",
     goal: "இலவச இணையதளம். கட்டண ChatGPT பாதையை நீங்கள் தேர்ந்தெடுத்தால் மட்டும் பணம்.",
     steps: [
-      "முதலில் இலவச GitHub கணக்கு. பிறகு Grok அல்லது ChatGPT. GitHub ஐ அந்த AI உடன் இணைக்கவும்.",
+      "முதலில் இலவச GitHub கணக்கு. பிறகு இணைய முகவரியை தேர்ந்தெடுங்கள். அந்த பெயரே GitHub களஞ்சியம்.",
       "பிறகு அதே அரட்டையில் prompt அனுப்பி, AI GitHub க்கு push செய்யட்டும்.",
       "Push ஆன பிறகு மட்டும் Cloudflare கணக்கு. பிறகு அந்த ஒரு களஞ்சியத்தை மட்டும் இணைக்கவும்.",
       "டெர்மினல் வேண்டாம். கடவுச்சொல் வேண்டாம். Cloudflare agent prompt ஐ அரட்டையில் ஒட்ட வேண்டாம்.",
@@ -81,6 +82,20 @@ export const ta: Record<string, Fields> = {
     see: "நீங்கள் உள்நுழைந்துள்ளீர்கள். மூலையில் உங்கள் பெயர் தெரியும்.",
     note: "வீடியோ உண்மையான GitHub முகப்பு. Sign up அழுத்துங்கள். பிறகு மின்னஞ்சல், கடவுச்சொல், பயனர் பெயர். அந்த படிவம் பதிவை தடுக்கும்.",
   },
+  "site-name": {
+    part: "முகவரி",
+    title: "இணைய முகவரியை தேர்ந்தெடுங்கள்",
+    goal: "இங்கே சேமிக்கும் பெயர் முகவரியின் முதல் பகுதி. அதுவே GitHub களஞ்சியப் பெயர்.",
+    steps: [
+      "பெட்டியில் ஒரு சிறிய பெயர். சிறிய ஆங்கில எழுத்து, எண், இடைக்கோடு மட்டும். உதாரணம்: apple-orange.",
+      "கீழுள்ள வரி முகவரி. apple-orange திட்டப் பெயர். your-name Cloudflare subdomain. workers.dev மாறாது.",
+      "சேமிக்கவும். பிறகு prompt நகலெடுக்கும்போது இந்த பெயர் நிரம்பும். மீண்டும் தட்டச்சு செய்ய வேண்டாம்.",
+      "Cloudflare இல் Subdomain அருகில் உள்ள பென்சில் நடுப்பகுதியை மட்டும் மாற்றும். வீடியோ அந்த திரை. இது கணக்கில் உள்ள எல்லா தளங்களையும் நகர்த்தும்.",
+    ],
+    see: "சரியான பெயர் சேமிக்கப்பட்டு, முகவரி வரியில் தெரியும்.",
+    note: "North Market என்பது பக்கத்தில் உள்ள பெயர். apple-orange என்பது முகவரி. இரண்டும் ஒன்றல்ல.",
+    pickUrl: true,
+  },
   "cloudflare-account": {
     part: "Cloudflare",
     title: "Cloudflare கணக்கை உருவாக்குங்கள்",
@@ -91,6 +106,7 @@ export const ta: Record<string, Fields> = {
       "Verify you are human ஐ தேர்ந்தெடுத்து Sign up அழுத்துங்கள்.",
       "Cloudflare மின்னஞ்சலை திறந்து உறுதி செய்யுங்கள்.",
       "Account home இல் Ready when you are என்று தெரியும். கார்டு கேட்டால் போட வேண்டாம்.",
+      "விருப்பம்: Workers & Pages திறக்கவும். Subdomain அருகில் உள்ள பென்சில் முகவரியின் நடுப்பகுதியை மாற்றும். workers.dev அப்படியே இருக்கும். கணக்கின் எல்லா தளங்களும் நகரும்.",
     ],
     see: "Cloudflare முகப்பு திரை. கார்டு சேர்க்கவில்லை.",
     note: "வீடியோ உண்மையான பதிவு திரை, பிறகு முகப்பு திரை.",
@@ -146,7 +162,7 @@ export const ta: Record<string, Fields> = {
       "GitHub கடவுச்சொல்லை பெட்டியில் தட்டச்சு செய்ய வேண்டாம்.",
       "பதில் I cannot push என்றால், prompt க்கு பிறகு உள்ள இரண்டு கைமுறை பாடங்கள். உண்மையில் push ஆனால் அவற்றை தவிர்க்கவும்.",
     ],
-    see: "GitHub இல் free-ai-website களஞ்சியம், அல்லது பதில் I cannot push.",
+    see: "GitHub இல் நீங்கள் சேமித்த பெயரில் களஞ்சியம், அல்லது பதில் I cannot push.",
     copyLabel: "கேள்வியை நகலெடு",
   },
   "prompt-parts": {
@@ -157,7 +173,7 @@ export const ta: Record<string, Fields> = {
       "REPLACE என்று சொல்லும் பகுதிகளை மட்டும் மாற்றுங்கள்.",
       "இணையதள பெயர், ஊர், தொலைபேசி. தொலைபேசி நாட்டு குறியீடும் எண்ணும், எண்கள் மட்டும். உதாரணம்: 15551234567.",
       "பொருள் வரிகள். பெயர், விலை, அது என்ன, ஒரு உண்மையான குறிப்பு.",
-      "GitHub வரிகளையும் கோப்பு பெயர்களையும் அப்படியே விடுங்கள்.",
+      "GitHub வரிகளையும் கோப்பு பெயர்களையும் அப்படியே விடுங்கள். நகல் பட்டன் சேமித்த முகவரி பெயரை நிரப்பும்.",
     ],
     see: "உங்கள் பெயர், ஊர், தொலைபேசி, பொருட்கள் prompt இல் உள்ளன. மற்றவை அப்படியே.",
     note: "ஆங்கில prompt ஐ Grok மற்றும் ChatGPT நன்றாக பின்பற்றும். prompt ஐ மொழிபெயர்க்க வேண்டாம்.",
@@ -179,14 +195,14 @@ export const ta: Record<string, Fields> = {
   "github-repo": {
     part: "முதல் வெளியீடு",
     title: "கேட்டால் மட்டும் களஞ்சியத்தை உருவாக்குங்கள்",
-    goal: "AI ஏற்கனவே free-ai-website உருவாக்கினால் இந்த பாடத்தை தவிர்க்கவும்.",
+    goal: "AI ஏற்கனவே உங்கள் பெயரில் களஞ்சியம் உருவாக்கினால் இந்த பாடத்தை தவிர்க்கவும்.",
     steps: [
       "GitHub இல் + , பிறகு New repository.",
-      "பெயர்: free-ai-website. Public.",
+      "பெயர்: நீங்கள் சேமித்த பெயர். உதாரணம்: apple-orange. Public.",
       "Add a README அல்லது Add .gitignore ஐ தேர்ந்தெடுக்க வேண்டாம். AI அந்த கோப்புகளை உருவாக்கும். இங்கே தேர்ந்தெடுத்தால் முதல் push தடைப்படலாம்.",
       "Create repository அழுத்துங்கள்.",
     ],
-    see: "பக்கம் உங்கள் பெயர் / free-ai-website என்று இருக்கும், அல்லது பாடத்தை தவிர்த்துவிட்டீர்கள்.",
+    see: "பக்கம் உங்கள் பயனர் பெயர் / சேமித்த பெயர் என்று இருக்கும், அல்லது பாடத்தை தவிர்த்துவிட்டீர்கள்.",
     note: "வீடியோ GitHub இன் சொந்த படம். உங்கள் பக்கத்தில் அதே பட்டன்கள்: +, New repository, Public, Create repository.",
   },
   upload: {
@@ -195,7 +211,7 @@ export const ta: Record<string, Fields> = {
     goal: "மாற்று வழி. பல கோப்புகளுக்கு GitHub இணையதளம் சிரமம்.",
     steps: [
       "பதில் Pushed to GitHub என்றால் தவிர்க்கவும்.",
-      "அதே அரட்டையில் இந்த கோப்புகளை கேளுங்கள்: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md.",
+      "அதே அரட்டையில் இந்த கோப்புகளை கேளுங்கள்: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md, package.json, build.mjs, wrangler.jsonc.",
       ".gitignore க்காக காத்திருக்க வேண்டாம். புள்ளியில் தொடங்கும் பெயரை GitHub இணையதளம் விட்டுவிடும். அந்த கோப்பு இல்லாமலும் இணையதளம் வேலை செய்யும்.",
       "களஞ்சியத்தில் Add file, Upload files. கோப்புகளை இழுத்து விடுங்கள். Commit changes.",
     ],
@@ -212,11 +228,14 @@ export const ta: Record<string, Fields> = {
       "நீல Create application பட்டன்.",
       "Connect GitHub அழுத்துங்கள். Hello World, template, Upload your static files வேண்டாம்.",
       "GitHub இல் Only select repositories. All repositories வேண்டாம்.",
-      "Select repositories திறந்து free-ai-website மட்டும். Install & Authorize.",
-      "இந்த சாதாரண இணையதளத்துக்கு Cloudflare சரியான build ஐ தானாக நிரப்பாது. கேட்டால்: Framework preset None. Build command காலியாக. காலி சேமிக்கவில்லை என்றால் exit 0. Build output directory: /",
+      "Select repositories திறந்து நீங்கள் சேமித்த களஞ்சியம் மட்டும். Install & Authorize.",
+      "அடுத்த திரையில் திட்டப் பெயர் அந்த களஞ்சியத்துடன் ஒன்றாக இருக்க வேண்டும். Cloudflare வழக்கமாக நிரப்பும். பொருந்தவில்லை என்றால் மட்டும் திருத்துங்கள்.",
+      "Build command பெட்டியில் மட்டும் தட்டச்சு செய்யுங்கள்: npm run build. Deploy command ஐ npx wrangler deploy என்று விடுங்கள். Preview command ஐ அப்படியே விடுங்கள்.",
+      "Enable Preview builds இயக்கத்தில் இருக்கட்டும். Protect with Cloudflare Access அணைந்திருக்கட்டும். Advanced திறக்க வேண்டாம். Deploy அழுத்துங்கள்.",
+      "Setting up your repository என்று வரும் வரை காத்திருங்கள்.",
     ],
-    see: "free-ai-website க்கு deployment தொடங்குகிறது.",
-    note: "வீடியோ உண்மையான Cloudflare திரை, பிறகு GitHub அனுமதி திரை.",
+    see: "உங்கள் களஞ்சியத்துக்கு deployment தொடங்குகிறது. Deploy command ஐ மாற்றவில்லை.",
+    note: "வீடியோ உண்மையான Cloudflare திரை: களஞ்சியம், திட்டப் பெயர், build பெட்டி, Deploy.",
   },
   "link-fix": {
     part: "Cloudflare",
@@ -224,9 +243,9 @@ export const ta: Record<string, Fields> = {
     goal: "Install & Authorize ஆகிவிட்டால் இந்த பாடத்தை தவிர்க்கவும்.",
     steps: [
       "GitHub இல் Settings, பிறகு Applications.",
-      "Cloudflare செயலியை Uninstall செய்யுங்கள், அல்லது free-ai-website ஐ நீக்கி சேமிக்கவும்.",
+      "Cloudflare செயலியை Uninstall செய்யுங்கள், அல்லது உங்கள் களஞ்சியத்தை நீக்கி சேமிக்கவும்.",
       "Cloudflare க்கு திரும்புங்கள். Create application, பிறகு Connect GitHub மறுபடியும்.",
-      "மறுபடியும் Only select repositories, free-ai-website மட்டும். Install & Authorize.",
+      "மறுபடியும் Only select repositories, உங்கள் களஞ்சியம் மட்டும். Install & Authorize.",
       "Build தோல்வி என்றால் சிவப்பு பிழையை pinned அரட்டையில் கீழுள்ள குறிப்புடன் ஒட்டுங்கள்.",
     ],
     see: "களஞ்சியம் தேர்வானது, அல்லது இணைப்பு ஏற்கனவே ஆனதால் தவிர்த்தீர்கள்.",
@@ -236,14 +255,15 @@ export const ta: Record<string, Fields> = {
   deploy: {
     part: "Cloudflare",
     title: "முதல் வெளியீட்டை சரிபார்க்கவும்",
-    goal: "இணையதளம் இணையத்தில் உள்ளது. மாற்றுவதற்கு முன் உறுதி செய்யுங்கள்.",
+    goal: "இணையதளம் இணையத்தில் உள்ளது. முகவரி திறக்க சில நிமிடம் ஆகலாம்.",
     steps: [
-      "Cloudflare Success என்று சொல்லும் வரை காத்திருங்கள்.",
-      "pages.dev என்று முடியும் முகவரியை திறக்கவும். தொலைபேசியிலும் திறக்கவும்.",
-      "பொருட்கள், தேடல், கூடை, WhatsApp, அழைப்பு ஆகியவற்றை பாருங்கள்.",
-      "அந்த முகவரியை pinned அரட்டையில் கீழுள்ள குறிப்புடன் ஒட்டுங்கள். AI இன்னும் Cloudflare ஐ பார்க்க முடியாது.",
+      "பதிவு Success. Build completed என்று சொல்லும் வரை காத்திருங்கள். முகவரி அந்த பதிவில் இருக்கும். உதாரணம்: https://apple-orange.your-name.workers.dev.",
+      "சில நிமிடம் காத்திருந்து, கணினியிலும் தொலைபேசியிலும் அந்த முகவரியை திறக்கவும்.",
+      "உலாவி பாதுகாப்பான இணைப்பை உருவாக்க முடியவில்லை என்றால், காத்திருந்து அதே முகவரியை மீண்டும் திறக்கவும். Advanced அழுத்த வேண்டாம்.",
+      "இணையதளம் திறந்தும் தவறாக இருந்தால் pinned அரட்டைக்கு சென்று திருத்தம் கேளுங்கள். Pushed to GitHub க்கு பிறகு Cloudflare புதிய பதிப்பை தானே உருவாக்கும். Deploy ஐ மீண்டும் அழுத்த வேண்டாம்.",
+      "புதிய build Success ஆன பிறகு புதுப்பிக்கவும். பிறகு முகவரியை pinned அரட்டையில் கீழுள்ள குறிப்புடன் ஒட்டுங்கள்.",
     ],
-    see: "இணையதளம் திறக்கிறது. Cloudflare பிழை பக்கம் அல்ல.",
+    see: "இணையதளம் திறக்கிறது. உலாவி எச்சரிக்கை அல்ல. Cloudflare பிழை பக்கம் அல்ல.",
     copyLabel: "AI இடம் சொல்வதை நகலெடு",
   },
   "the-order": {
@@ -253,8 +273,8 @@ export const ta: Record<string, Fields> = {
     steps: [
       "1. pinned அரட்டையை திறக்கவும். அதே கீழ் பெட்டியில் தட்டச்சு. New chat அழுத்த வேண்டாம்.",
       "2. பதில் Pushed to GitHub என்று வரும் வரை காத்திருங்கள்.",
-      "3. Cloudflare அந்த push ஐ தானே வெளியிடும். Cloudflare இல் மீண்டும் கோப்புகளை போட வேண்டாம்.",
-      "AI GitHub ஐ உறுதி செய்யும். Cloudflare ஐ பார்க்காது. நீங்கள் Success ஐ பார்த்து, pages.dev ஐ புதுப்பித்து, மாற்றம் தெரிகிறதா என்று அரட்டையில் சொல்லுங்கள்.",
+      "3. Cloudflare புதிய பதிப்பை தானே உருவாக்கும். Deploy ஐ மீண்டும் அழுத்த வேண்டாம். கோப்புகளை மீண்டும் போட வேண்டாம்.",
+      "AI GitHub ஐ உறுதி செய்யும். Cloudflare ஐ பார்க்காது. நீங்கள் Success ஐ பார்த்து, workers.dev ஐ புதுப்பித்து, மாற்றம் தெரிகிறதா என்று அரட்டையில் சொல்லுங்கள்.",
     ],
     see: "மூன்று படிகளையும் பார்க்காமல் சொல்ல முடியும்.",
   },
@@ -265,7 +285,7 @@ export const ta: Record<string, Fields> = {
     steps: [
       "pinned அரட்டையில் கீழுள்ள செய்தியை ஒட்டுங்கள்.",
       "Pushed to GitHub வரை காத்திருங்கள். I cannot push என்றால் பதிவேற்ற பாடம், பிறகு இங்கே திரும்புங்கள்.",
-      "Cloudflare ஐ திறக்கவும். புதிய deployment தானே தொடங்கும். Success வரை காத்திருங்கள்.",
+      "Cloudflare ஐ திறக்கவும். புதிய build தானே தொடங்கும். Success. Build completed வரை காத்திருங்கள்.",
       "இணையதளத்தை புதுப்பிக்கவும். பழைய விலை என்றால் இரண்டு நிமிடம் காத்திருந்து மீண்டும் புதுப்பிக்கவும்.",
       "அதே அரட்டையில் பதில்: live ஆகிவிட்டது, அல்லது இன்னும் live ஆகவில்லை.",
     ],
@@ -288,7 +308,7 @@ export const ta: Record<string, Fields> = {
     title: "robots.txt மற்றும் sitemap",
     goal: "Google இணையதளத்தை படிக்க அனுமதி.",
     steps: [
-      "pages.dev முகவரியின் கடைசியில் /robots.txt. Allow இருக்க வேண்டும், Disallow: / இருக்க கூடாது.",
+      "workers.dev முகவரியின் கடைசியில் /robots.txt. Allow இருக்க வேண்டும், Disallow: / இருக்க கூடாது.",
       "கடைசியில் /sitemap.xml. இரண்டு பக்கங்களும் இருக்க வேண்டும்.",
       "கோப்பு இல்லை என்றால் pinned அரட்டையில் கேளுங்கள், பிறகு Cloudflare Success.",
     ],
@@ -311,7 +331,7 @@ export const ta: Record<string, Fields> = {
     title: "Google Search Console",
     goal: "இணையதளம் இருப்பதை Google இடம் சொல்லுங்கள். இலவசம்.",
     steps: [
-      "search.google.com/search-console. URL prefix. உங்கள் https pages.dev முகவரி.",
+      "search.google.com/search-console. URL prefix. உங்கள் https workers.dev முகவரி.",
       "Google ஒரு tag காட்டும். அதை pinned அரட்டையில் ஒட்டி push கேளுங்கள்.",
       "Cloudflare Successக்கு பிறகு Verify. பிறகு sitemap.xml ஐ சமர்ப்பிக்கவும்.",
     ],
@@ -346,7 +366,7 @@ export const ta: Record<string, Fields> = {
     title: "வேகம் எண், போலி பதக்கம் அல்ல",
     goal: "இணையதளம் இலகுவாக உள்ளதா என்று பாருங்கள்.",
     steps: [
-      "pagespeed.web.dev. pages.dev முகவரியை ஒட்டுங்கள். Analyze.",
+      "pagespeed.web.dev. workers.dev முகவரியை ஒட்டுங்கள். Analyze.",
       "மொபைல் எண்ணை படியுங்கள். குறைவு என்றால் pinned அரட்டையில் பெரிய படங்களை நீக்கி push கேளுங்கள்.",
       "Google verified அல்லது Google recommended என்ற பதக்கத்தை போட வேண்டாம். அப்படி ஒரு பதக்கம் இல்லை.",
     ],
@@ -359,7 +379,7 @@ export const ta: Record<string, Fields> = {
     steps: [
       "பயிற்சி இணையதளம் என்றால் தவிர்க்கவும்.",
       "உரிமையாளர் கடையின் Google கணக்கில் business.google.com ஐ திறக்கிறார்.",
-      "கடை பெயர், ஊர், தொலைபேசி, நேரம், pages.dev முகவரி.",
+      "கடை பெயர், ஊர், தொலைபேசி, நேரம், workers.dev முகவரி.",
       "Google இன் தபால் அட்டை அல்லது வீடியோவுக்கு காத்திருங்கள். குறியீட்டை கற்பனை செய்ய வேண்டாம்.",
     ],
     see: "பட்டியல் இணையதளத்துடன் பொருந்துகிறது, அல்லது தவிர்த்துவிட்டீர்கள்.",
@@ -370,7 +390,7 @@ export const ta: Record<string, Fields> = {
     title: "உங்கள் சொந்த இணையதள பெயர்",
     goal: "பிறகு ஒரு டொமைன் வாங்கினால் மட்டும். இதற்கு பணம்.",
     steps: [
-      "pages.dev இல் இருந்தால் தவிர்க்கவும்.",
+      "workers.dev இல் இருந்தால் தவிர்க்கவும்.",
       "Pages திட்டத்தில் www இல்லாத பெயர், பிறகு www.",
       "www.yourname.com ஐ https://yourname.com க்கு ஒரு redirect, நிலை 301.",
     ],
@@ -396,7 +416,7 @@ export const ml: Record<string, Fields> = {
     title: "ഈ ക്ലാസ് എന്താണ്",
     goal: "സൗജന്യ വെബ്സൈറ്റ്. പണമടച്ച ChatGPT വഴി തിരഞ്ഞെടുത്താൽ മാത്രം പണം.",
     steps: [
-      "ആദ്യം സൗജന്യ GitHub അക്കൗണ്ട്. പിന്നെ Grok അല്ലെങ്കിൽ ChatGPT. GitHub ആ AI യുമായി ബന്ധിപ്പിക്കുക.",
+      "ആദ്യം സൗജന്യ GitHub അക്കൗണ്ട്. പിന്നെ വെബ് വിലാസം തിരഞ്ഞെടുക്കുക. ആ പേരാണ് GitHub റിപ്പോസിറ്ററി.",
       "പിന്നെ അതേ ചാറ്റിൽ prompt അയച്ച്, AI GitHub ലേക്ക് push ചെയ്യട്ടെ.",
       "Push കഴിഞ്ഞ ശേഷം മാത്രം Cloudflare അക്കൗണ്ട്. പിന്നെ ആ ഒരു റിപ്പോസിറ്ററി മാത്രം ബന്ധിപ്പിക്കുക.",
       "ടെർമിനൽ വേണ്ട. പാസ്‌വേഡ് വേണ്ട. Cloudflare agent prompt ചാറ്റിൽ ഒട്ടിക്കരുത്.",
@@ -430,6 +450,20 @@ export const ml: Record<string, Fields> = {
     see: "നിങ്ങൾ അകത്ത് കയറി. മൂലയിൽ പേര് കാണാം.",
     note: "വീഡിയോ യഥാർത്ഥ GitHub ഹോം പേജ് ആണ്. Sign up അമർത്തുക. പിന്നെ ഇമെയിൽ, പാസ്‌വേഡ്, പേര്. ആ ഫോം റെക്കോർഡിംഗിനെ തടയും.",
   },
+  "site-name": {
+    part: "വിലാസം",
+    title: "വെബ് വിലാസം തിരഞ്ഞെടുക്കുക",
+    goal: "ഇവിടെ സൂക്ഷിക്കുന്ന പേര് വിലാസത്തിന്റെ ആദ്യ ഭാഗമാണ്. അതുതന്നെ GitHub റിപ്പോസിറ്ററി പേര്.",
+    steps: [
+      "ബോക്സിൽ ഒരു ചെറിയ പേര്. ചെറിയ ഇംഗ്ലീഷ് അക്ഷരം, അക്കം, ഹൈഫൻ മാത്രം. ഉദാഹരണം: apple-orange.",
+      "താഴെയുള്ള വരി വിലാസമാണ്. apple-orange പ്രോജക്റ്റ് പേര്. your-name Cloudflare subdomain. workers.dev മാറില്ല.",
+      "സൂക്ഷിക്കുക. പിന്നീട് prompt പകർത്തുമ്പോൾ ഈ പേര് നിറയും. വീണ്ടും ടൈപ്പ് ചെയ്യേണ്ട.",
+      "Cloudflare ൽ Subdomain ന് അടുത്ത പെൻസിൽ നടുഭാഗം മാത്രം മാറ്റും. വീഡിയോ ആ സ്ക്രീൻ ആണ്. അക്കൗണ്ടിലെ എല്ലാ സൈറ്റുകളും നീങ്ങും.",
+    ],
+    see: "ശരിയായ പേര് സൂക്ഷിച്ചു, വിലാസ വരിയിൽ കാണാം.",
+    note: "North Market പേജിലെ പേരാണ്. apple-orange വിലാസമാണ്. രണ്ടും ഒന്നല്ല.",
+    pickUrl: true,
+  },
   "cloudflare-account": {
     part: "Cloudflare",
     title: "Cloudflare അക്കൗണ്ട് ഉണ്ടാക്കുക",
@@ -440,6 +474,7 @@ export const ml: Record<string, Fields> = {
       "Verify you are human തിരഞ്ഞെടുത്ത് Sign up അമർത്തുക.",
       "Cloudflare ഇമെയിൽ തുറന്ന് ഉറപ്പാക്കുക.",
       "Account home ൽ Ready when you are കാണും. കാർഡ് ചോദിച്ചാൽ ഇടരുത്.",
+      "ഐച്ഛികം: Workers & Pages തുറക്കുക. Subdomain ന് അടുത്ത പെൻസിൽ വിലാസത്തിന്റെ നടുഭാഗം മാറ്റും. workers.dev അതേപടി. അക്കൗണ്ടിലെ എല്ലാ സൈറ്റുകളും നീങ്ങും.",
     ],
     see: "Cloudflare ഹോം സ്ക്രീൻ. കാർഡ് ചേർത്തില്ല.",
     note: "വീഡിയോ യഥാർത്ഥ സൈൻ അപ്പ് സ്ക്രീൻ, പിന്നെ ഹോം സ്ക്രീൻ.",
@@ -495,7 +530,7 @@ export const ml: Record<string, Fields> = {
       "GitHub പാസ്‌വേഡ് ബോക്സിൽ ടൈപ്പ് ചെയ്യരുത്.",
       "മറുപടി I cannot push എന്നാണെങ്കിൽ, prompt ന് ശേഷമുള്ള രണ്ട് കൈപ്പാഠങ്ങൾ. ശരിക്കും push ആയാൽ അവ ഒഴിവാക്കുക.",
     ],
-    see: "GitHub ൽ free-ai-website റിപ്പോസിറ്ററി, അല്ലെങ്കിൽ മറുപടി I cannot push.",
+    see: "GitHub ൽ നിങ്ങൾ സൂക്ഷിച്ച പേരിൽ റിപ്പോസിറ്ററി, അല്ലെങ്കിൽ മറുപടി I cannot push.",
     copyLabel: "ചോദ്യം പകർത്തുക",
   },
   "prompt-parts": {
@@ -528,14 +563,14 @@ export const ml: Record<string, Fields> = {
   "github-repo": {
     part: "ആദ്യ പ്രസിദ്ധീകരണം",
     title: "ചോദിച്ചാൽ മാത്രം റിപ്പോസിറ്ററി ഉണ്ടാക്കുക",
-    goal: "AI നേരത്തെ free-ai-website ഉണ്ടാക്കിയാൽ ഈ പാഠം ഒഴിവാക്കുക.",
+    goal: "AI നേരത്തെ നിങ്ങളുടെ പേരിൽ റിപ്പോസിറ്ററി ഉണ്ടാക്കിയാൽ ഈ പാഠം ഒഴിവാക്കുക.",
     steps: [
       "GitHub ൽ + , പിന്നെ New repository.",
-      "പേര്: free-ai-website. Public.",
+      "പേര്: നിങ്ങൾ സൂക്ഷിച്ച പേര്. ഉദാഹരണം: apple-orange. Public.",
       "Add a README അല്ലെങ്കിൽ Add .gitignore തിരഞ്ഞെടുക്കരുത്. AI ആ ഫയലുകൾ ഉണ്ടാക്കും. ഇവിടെ തിരഞ്ഞെടുത്താൽ ആദ്യ push തടയാം.",
       "Create repository അമർത്തുക.",
     ],
-    see: "പേജ് നിങ്ങളുടെ പേര് / free-ai-website എന്ന് കാണിക്കും, അല്ലെങ്കിൽ പാഠം ഒഴിവാക്കി.",
+    see: "പേജ് നിങ്ങളുടെ ഉപയോക്തൃനാമം / സൂക്ഷിച്ച പേര് എന്ന് കാണിക്കും, അല്ലെങ്കിൽ പാഠം ഒഴിവാക്കി.",
     note: "വീഡിയോ GitHub ന്റെ സ്വന്തം ചിത്രമാണ്. നിങ്ങളുടെ പേജിൽ അതേ ബട്ടണുകൾ: +, New repository, Public, Create repository.",
   },
   upload: {
@@ -544,7 +579,7 @@ export const ml: Record<string, Fields> = {
     goal: "പകരം വഴി. പല ഫയലുകൾക്ക് GitHub വെബ്സൈറ്റ് ബുദ്ധിമുട്ടാണ്.",
     steps: [
       "മറുപടി Pushed to GitHub ആണെങ്കിൽ ഒഴിവാക്കുക.",
-      "അതേ ചാറ്റിൽ ഈ ഫയലുകൾ ചോദിക്കുക: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md.",
+      "അതേ ചാറ്റിൽ ഈ ഫയലുകൾ ചോദിക്കുക: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md, package.json, build.mjs, wrangler.jsonc.",
       ".gitignore ന് വേണ്ടി കാത്തിരിക്കരുത്. ഡോട്ടിൽ തുടങ്ങുന്ന പേര് GitHub വെബ്സൈറ്റ് വിടും. ആ ഫയൽ ഇല്ലാതെയും വെബ്സൈറ്റ് പ്രവർത്തിക്കും.",
       "റിപ്പോസിറ്ററിയിൽ Add file, Upload files. ഫയലുകൾ വലിച്ചിടുക. Commit changes.",
     ],
@@ -561,11 +596,14 @@ export const ml: Record<string, Fields> = {
       "നീല Create application ബട്ടൺ.",
       "Connect GitHub അമർത്തുക. Hello World, template, Upload your static files വേണ്ട.",
       "GitHub ൽ Only select repositories. All repositories വേണ്ട.",
-      "Select repositories തുറന്ന് free-ai-website മാത്രം. Install & Authorize.",
-      "ഈ ലളിതമായ വെബ്സൈറ്റിന് Cloudflare ശരിയായ build സ്വയം നിറയ്ക്കില്ല. ചോദിച്ചാൽ: Framework preset None. Build command ഒഴിഞ്ഞത്. ഒഴിഞ്ഞത് സേവ് ആകുന്നില്ലെങ്കിൽ exit 0. Build output directory: /",
+      "Select repositories തുറന്ന് നിങ്ങൾ സൂക്ഷിച്ച റിപ്പോസിറ്ററി മാത്രം. Install & Authorize.",
+      "അടുത്ത സ്ക്രീനിൽ പ്രോജക്റ്റ് പേര് ആ റിപ്പോസിറ്ററിയുമായി ഒത്തിരിക്കണം. Cloudflare സാധാരണയായി നിറയ്ക്കും. ഒത്തില്ലെങ്കിൽ മാത്രം തിരുത്തുക.",
+      "Build command ബോക്സിൽ മാത്രം ടൈപ്പ് ചെയ്യുക: npm run build. Deploy command npx wrangler deploy ആയി വിടുക. Preview command അതേപടി വിടുക.",
+      "Enable Preview builds ഓൺ ആയി വിടുക. Protect with Cloudflare Access ഓഫ് ആയി വിടുക. Advanced തുറക്കരുത്. Deploy അമർത്തുക.",
+      "Setting up your repository എന്ന് വരും വരെ കാത്തിരിക്കുക.",
     ],
-    see: "free-ai-website ന് deployment തുടങ്ങുന്നു.",
-    note: "വീഡിയോ യഥാർത്ഥ Cloudflare സ്ക്രീൻ, പിന്നെ GitHub അനുമതി സ്ക്രീൻ.",
+    see: "നിങ്ങളുടെ റിപ്പോസിറ്ററിക്ക് deployment തുടങ്ങുന്നു. Deploy command മാറ്റിയില്ല.",
+    note: "വീഡിയോ യഥാർത്ഥ Cloudflare സ്ക്രീൻ: റിപ്പോസിറ്ററി, പ്രോജക്റ്റ് പേര്, build ബോക്സ്, Deploy.",
   },
   "link-fix": {
     part: "Cloudflare",
@@ -573,9 +611,9 @@ export const ml: Record<string, Fields> = {
     goal: "Install & Authorize ആയാൽ ഈ പാഠം ഒഴിവാക്കുക.",
     steps: [
       "GitHub ൽ Settings, പിന്നെ Applications.",
-      "Cloudflare ആപ്പ് Uninstall ചെയ്യുക, അല്ലെങ്കിൽ free-ai-website നീക്കി സേവ് ചെയ്യുക.",
+      "Cloudflare ആപ്പ് Uninstall ചെയ്യുക, അല്ലെങ്കിൽ നിങ്ങളുടെ റിപ്പോസിറ്ററി നീക്കി സേവ് ചെയ്യുക.",
       "Cloudflare ലേക്ക് മടങ്ങുക. Create application, പിന്നെ Connect GitHub വീണ്ടും.",
-      "വീണ്ടും Only select repositories, free-ai-website മാത്രം. Install & Authorize.",
+      "വീണ്ടും Only select repositories, നിങ്ങളുടെ റിപ്പോസിറ്ററി മാത്രം. Install & Authorize.",
       "Build പരാജയപ്പെട്ടാൽ ചുവന്ന പിശക് pinned ചാറ്റിൽ താഴെയുള്ള കുറിപ്പിനൊപ്പം ഒട്ടിക്കുക.",
     ],
     see: "റിപ്പോസിറ്ററി തിരഞ്ഞെടുത്തു, അല്ലെങ്കിൽ ബന്ധം നേരത്തെ ആയതുകൊണ്ട് ഒഴിവാക്കി.",
@@ -585,14 +623,15 @@ export const ml: Record<string, Fields> = {
   deploy: {
     part: "Cloudflare",
     title: "ആദ്യ പ്രസിദ്ധീകരണം പരിശോധിക്കുക",
-    goal: "വെബ്സൈറ്റ് ഇന്റർനെറ്റിലുണ്ട്. മാറ്റുന്നതിന് മുൻപ് ഉറപ്പാക്കുക.",
+    goal: "വെബ്സൈറ്റ് ഇന്റർനെറ്റിലുണ്ട്. വിലാസം തുറക്കാൻ കുറച്ച് മിനിറ്റ് എടുത്തേക്കാം.",
     steps: [
-      "Cloudflare Success എന്ന് പറയും വരെ കാത്തിരിക്കുക.",
-      "pages.dev ൽ അവസാനിക്കുന്ന വിലാസം തുറക്കുക. ഫോണിലും തുറക്കുക.",
-      "സാധനങ്ങൾ, തിരയൽ, കാർട്ട്, WhatsApp, കോൾ എന്നിവ നോക്കുക.",
-      "ആ വിലാസം pinned ചാറ്റിൽ താഴെയുള്ള കുറിപ്പിനൊപ്പം ഒട്ടിക്കുക. AI യ്ക്ക് ഇപ്പോഴും Cloudflare കാണാനാകില്ല.",
+      "ലോഗ് Success. Build completed എന്ന് പറയും വരെ കാത്തിരിക്കുക. വിലാസം ആ ലോഗിലുണ്ട്. ഉദാഹരണം: https://apple-orange.your-name.workers.dev.",
+      "കുറച്ച് മിനിറ്റ് കാത്ത്, കമ്പ്യൂട്ടറിലും ഫോണിലും ആ വിലാസം തുറക്കുക.",
+      "ബ്രൗസർ സുരക്ഷിത കണക്ഷൻ ഉണ്ടാക്കാനാകുന്നില്ല എന്ന് പറഞ്ഞാൽ, കാത്ത് അതേ വിലാസം വീണ്ടും തുറക്കുക. Advanced അമർത്തരുത്.",
+      "വെബ്സൈറ്റ് തുറന്നിട്ട് തെറ്റാണെങ്കിൽ pinned ചാറ്റിൽ തിരുത്തൽ ചോദിക്കുക. Pushed to GitHub കഴിഞ്ഞാൽ Cloudflare പുതിയ പതിപ്പ് സ്വയം ഉണ്ടാക്കും. Deploy വീണ്ടും അമർത്തരുത്.",
+      "പുതിയ build Success ആയ ശേഷം പുതുക്കുക. പിന്നെ വിലാസം pinned ചാറ്റിൽ താഴെയുള്ള കുറിപ്പിനൊപ്പം ഒട്ടിക്കുക.",
     ],
-    see: "വെബ്സൈറ്റ് തുറക്കുന്നു. Cloudflare പിശക് പേജല്ല.",
+    see: "വെബ്സൈറ്റ് തുറക്കുന്നു. ബ്രൗസർ മുന്നറിയിപ്പല്ല. Cloudflare പിശക് പേജല്ല.",
     copyLabel: "AI യോട് പറയേണ്ടത് പകർത്തുക",
   },
   "the-order": {
@@ -602,8 +641,8 @@ export const ml: Record<string, Fields> = {
     steps: [
       "1. pinned ചാറ്റ് തുറക്കുക. അതേ അടിബോക്സിൽ ടൈപ്പ് ചെയ്യുക. New chat അമർത്തരുത്.",
       "2. മറുപടി Pushed to GitHub എന്ന് വരും വരെ കാത്തിരിക്കുക.",
-      "3. Cloudflare ആ push സ്വയം പ്രസിദ്ധീകരിക്കും. Cloudflare ലേക്ക് വീണ്ടും ഫയലുകൾ ഇടരുത്.",
-      "AI GitHub ഉറപ്പാക്കും. Cloudflare കാണില്ല. നിങ്ങൾ Success നോക്കി, pages.dev പുതുക്കി, മാറ്റം കാണുന്നുണ്ടോ എന്ന് ചാറ്റിൽ പറയുക.",
+      "3. Cloudflare പുതിയ പതിപ്പ് സ്വയം ഉണ്ടാക്കും. Deploy വീണ്ടും അമർത്തരുത്. ഫയലുകൾ വീണ്ടും ഇടരുത്.",
+      "AI GitHub ഉറപ്പാക്കും. Cloudflare കാണില്ല. നിങ്ങൾ Success നോക്കി, workers.dev പുതുക്കി, മാറ്റം കാണുന്നുണ്ടോ എന്ന് ചാറ്റിൽ പറയുക.",
     ],
     see: "മൂന്ന് ഘട്ടങ്ങളും നോക്കാതെ പറയാം.",
   },
@@ -614,7 +653,7 @@ export const ml: Record<string, Fields> = {
     steps: [
       "pinned ചാറ്റിൽ താഴെയുള്ള സന്ദേശം ഒട്ടിക്കുക.",
       "Pushed to GitHub വരെ കാത്തിരിക്കുക. I cannot push എന്നാൽ അപ്‌ലോഡ് പാഠം, പിന്നെ ഇവിടെ മടങ്ങുക.",
-      "Cloudflare തുറക്കുക. പുതിയ deployment സ്വയം തുടങ്ങും. Success വരെ കാത്തിരിക്കുക.",
+      "Cloudflare തുറക്കുക. പുതിയ build സ്വയം തുടങ്ങും. Success. Build completed വരെ കാത്തിരിക്കുക.",
       "വെബ്സൈറ്റ് പുതുക്കുക. പഴയ വിലയാണെങ്കിൽ രണ്ട് മിനിറ്റ് കാത്ത് വീണ്ടും പുതുക്കുക.",
       "അതേ ചാറ്റിൽ മറുപടി: live ആയി, അല്ലെങ്കിൽ ഇനിയും live ആയില്ല.",
     ],
@@ -637,7 +676,7 @@ export const ml: Record<string, Fields> = {
     title: "robots.txt ഉം sitemap ഉം",
     goal: "Google ന് വെബ്സൈറ്റ് വായിക്കാൻ അനുവാദം.",
     steps: [
-      "pages.dev വിലാസത്തിന്റെ അവസാനം /robots.txt. Allow വേണം, Disallow: / വേണ്ട.",
+      "workers.dev വിലാസത്തിന്റെ അവസാനം /robots.txt. Allow വേണം, Disallow: / വേണ്ട.",
       "അവസാനം /sitemap.xml. രണ്ട് പേജുകളും വേണം.",
       "ഫയൽ ഇല്ലെങ്കിൽ pinned ചാറ്റിൽ ചോദിക്കുക, പിന്നെ Cloudflare Success.",
     ],
@@ -660,7 +699,7 @@ export const ml: Record<string, Fields> = {
     title: "Google Search Console",
     goal: "വെബ്സൈറ്റ് ഉണ്ടെന്ന് Google നോട് പറയുക. സൗജന്യം.",
     steps: [
-      "search.google.com/search-console. URL prefix. നിങ്ങളുടെ https pages.dev വിലാസം.",
+      "search.google.com/search-console. URL prefix. നിങ്ങളുടെ https workers.dev വിലാസം.",
       "Google ഒരു tag കാണിക്കും. അത് pinned ചാറ്റിൽ ഒട്ടിച്ച് push ചോദിക്കുക.",
       "Cloudflare Success ന് ശേഷം Verify. പിന്നെ sitemap.xml സമർപ്പിക്കുക.",
     ],
@@ -695,7 +734,7 @@ export const ml: Record<string, Fields> = {
     title: "വേഗ സംഖ്യ, കള്ള ബാഡ്ജ് അല്ല",
     goal: "വെബ്സൈറ്റ് ഭാരം കുറഞ്ഞതാണോ എന്ന് നോക്കുക.",
     steps: [
-      "pagespeed.web.dev. pages.dev വിലാസം ഒട്ടിക്കുക. Analyze.",
+      "pagespeed.web.dev. workers.dev വിലാസം ഒട്ടിക്കുക. Analyze.",
       "മൊബൈൽ സംഖ്യ വായിക്കുക. കുറവാണെങ്കിൽ pinned ചാറ്റിൽ വലിയ ചിത്രങ്ങൾ നീക്കി push ചോദിക്കുക.",
       "Google verified അല്ലെങ്കിൽ Google recommended എന്ന ബാഡ്ജ് ഇടരുത്. അങ്ങനെ ഒരു ബാഡ്ജ് ഇല്ല.",
     ],
@@ -708,7 +747,7 @@ export const ml: Record<string, Fields> = {
     steps: [
       "പരിശീലന വെബ്സൈറ്റ് ആണെങ്കിൽ ഒഴിവാക്കുക.",
       "ഉടമ കടയുടെ Google അക്കൗണ്ടിൽ business.google.com തുറക്കുന്നു.",
-      "കടയുടെ പേര്, നാട്, ഫോൺ, സമയം, pages.dev വിലാസം.",
+      "കടയുടെ പേര്, നാട്, ഫോൺ, സമയം, workers.dev വിലാസം.",
       "Google ന്റെ കത്തോ വീഡിയോയോ വരെ കാത്തിരിക്കുക. കോഡ് കെട്ടിച്ചമയ്ക്കരുത്.",
     ],
     see: "ലിസ്റ്റിംഗ് വെബ്സൈറ്റുമായി ചേരുന്നു, അല്ലെങ്കിൽ ഒഴിവാക്കി.",
@@ -719,7 +758,7 @@ export const ml: Record<string, Fields> = {
     title: "സ്വന്തം വെബ്സൈറ്റ് പേര്",
     goal: "പിന്നീട് ഒരു ഡൊമെയ്ൻ വാങ്ങിയാൽ മാത്രം. ഇതിന് പണം.",
     steps: [
-      "pages.dev ൽ തുടരുകയാണെങ്കിൽ ഒഴിവാക്കുക.",
+      "workers.dev ൽ തുടരുകയാണെങ്കിൽ ഒഴിവാക്കുക.",
       "Pages പ്രോജക്റ്റിൽ www ഇല്ലാത്ത പേര്, പിന്നെ www.",
       "www.yourname.com നെ https://yourname.com ലേക്ക് ഒരു redirect, നില 301.",
     ],

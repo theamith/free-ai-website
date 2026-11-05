@@ -26,17 +26,16 @@ If an older copy said `tsc: command not found`, delete the `node_modules` folder
 
 ## Publish on Cloudflare Pages
 
-This class site is a React app, so Cloudflare must build it. It will not guess the command.
+This screen has no output-directory box. Use two commands:
 
-On the build settings screen, type these yourself:
-
-| Setting | Value |
+| Box | Type this |
 | --- | --- |
-| Framework preset | None |
 | Build command | `npm run build` |
-| Build output directory | `dist` |
+| Deploy command | `npx wrangler deploy` |
 
-Do not leave the build command empty. That setting is only for the plain HTML practice site inside the lessons.
+Leave the preview command as Cloudflare filled it. Leave **Protect with Cloudflare Access** off.
+
+`wrangler.jsonc` tells Cloudflare to publish the `dist` folder. The `"name"` inside that file must match the project name on the form.
 
 Connect only this GitHub repository. Do not grant access to all repositories.
 

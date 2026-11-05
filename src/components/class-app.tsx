@@ -5,6 +5,7 @@ import { langs, ui, type Lang } from "@/lib/ui";
 
 const STORAGE_KEY = "fwb-progress.v2";
 const TOOL_KEY = "fwb-ai";
+const NAME_KEY = "fwb-site-name";
 
 type Saved = { done: string[]; current: string };
 type Theme = "light" | "dark";
@@ -33,6 +34,8 @@ export function ClassApp() {
   const [theme, setTheme] = useState<Theme>("light");
   const [menuOpen, setMenuOpen] = useState(false);
   const [tool, setTool] = useState<Tool | "">("");
+  const [siteName, setSiteName] = useState("");
+  const [nameDraft, setNameDraft] = useState("");
 
   const lessons = useMemo(() => lessonsFor(lang), [lang]);
   const parts = useMemo(() => partsFor(lessons), [lessons]);
@@ -56,6 +59,9 @@ export function ClassApp() {
     if (saved) setDone(saved.done);
     const storedTool = localStorage.getItem(TOOL_KEY);
     if (storedTool === "grok" || storedTool === "chatgpt") setTool(storedTool);
+    const storedName = localStorage.getItem(NAME_KEY) ?? "";
+    setSiteName(storedName);
+    setNameDraft(storedName);
     setHydrated(true);
   }, []);
 
@@ -104,6 +110,20 @@ export function ClassApp() {
     localStorage.setItem(TOOL_KEY, id);
   }
 
+  function nameProblem(value: string): string {
+    if (!value) return "";
+    if (value.length > 63) return copy.nameLong;
+    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(value)) return copy.nameRule;
+    return "";
+  }
+
+  function saveName() {
+    const value = nameDraft.trim();
+    if (!value || nameProblem(value)) return;
+    setSiteName(value);
+    localStorage.setItem(NAME_KEY, value);
+  }
+
   async function copyText(text: string) {
     try {
       await navigator.clipboard.writeText(text);
@@ -117,6 +137,9 @@ export function ClassApp() {
     }
     setCopied(true);
   }
+
+  const shownName = nameProblem(nameDraft) || !nameDraft ? "apple-orange" : nameDraft;
+  const promptText = (lesson.copy?.text ?? "").replaceAll("SITE-NAME", siteName || "SITE-NAME");
 
   return (
     <div className="min-h-screen bg-paper text-ink">
@@ -292,6 +315,57 @@ export function ClassApp() {
             </div>
           ) : null}
 
+          {lesson.pickUrl ? (
+            <form
+              className="mt-6 rounded-card border border-line bg-card p-5"
+              onSubmit={(event) => {
+                event.preventDefault();
+                saveName();
+              }}
+            >
+              <label htmlFor="site-name" className="text-sm font-semibold">
+                {copy.nameLabel}
+              </label>
+              <div className="mt-2 flex flex-col gap-2 sm:flex-row">
+                <input
+                  id="site-name"
+                  value={nameDraft}
+                  autoCapitalize="none"
+                  autoCorrect="off"
+                  spellCheck={false}
+                  onChange={(event) => setNameDraft(event.target.value.trim().toLowerCase())}
+                  className="h-12 w-full rounded-card border border-line bg-paper px-3 text-base text-ink"
+                />
+                <button type="submit" className="inline-flex h-12 items-center justify-center rounded-full bg-copper px-5 text-sm font-semibold text-on-copper">
+                  {copy.nameSave}
+                </button>
+              </div>
+              {nameProblem(nameDraft) ? <p className="mt-2 text-sm text-copper">{nameProblem(nameDraft)}</p> : null}
+              <p className="mt-4 text-sm text-muted">{copy.urlLooks}</p>
+              <p className="mt-2 break-all text-lg font-semibold">
+                <span className="text-copper">{shownName}</span>
+                <span>.your-name</span>
+                <span className="text-muted">.workers.dev</span>
+              </p>
+              <ol className="mt-4 grid gap-2 text-sm">
+                <li>
+                  <span className="font-semibold text-copper">1. {shownName}.</span> {copy.urlProject}
+                </li>
+                <li>
+                  <span className="font-semibold">2. your-name.</span> {copy.urlSub}
+                </li>
+                <li>
+                  <span className="font-semibold text-muted">3. workers.dev.</span> {copy.urlFixed}
+                </li>
+              </ol>
+              {siteName ? (
+                <p className="mt-4 text-sm font-semibold">
+                  {copy.nameSaved}: {siteName}
+                </p>
+              ) : null}
+            </form>
+          ) : null}
+
           <div className="mt-6">
             <h2 className="text-lg">{copy.watch}</h2>
             <video key={lesson.video + lang} controls playsInline preload="metadata" className="mt-3 aspect-video w-full rounded-card border border-line bg-ink" src={lesson.video} />
@@ -310,11 +384,12 @@ export function ClassApp() {
             <div className="mt-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <h2 className="text-lg">{lesson.copy.label}</h2>
-                <button type="button" onClick={() => copyText(lesson.copy?.text ?? "")} className="inline-flex h-11 items-center rounded-full bg-copper px-4 text-sm font-semibold text-on-copper">
+                <button type="button" onClick={() => copyText(promptText)} className="inline-flex h-11 items-center rounded-full bg-copper px-4 text-sm font-semibold text-on-copper">
                   {copied ? copy.copied : lesson.copy.label}
                 </button>
               </div>
-              <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-card bg-ink p-4 text-sm leading-relaxed text-on-ink">{lesson.copy.text}</pre>
+              {!siteName && lesson.copy.text.includes("SITE-NAME") ? <p className="mt-2 text-sm text-copper">{copy.nameNeed}</p> : null}
+              <pre className="mt-3 max-h-96 overflow-auto whitespace-pre-wrap rounded-card bg-ink p-4 text-sm leading-relaxed text-on-ink">{promptText}</pre>
             </div>
           ) : null}
 

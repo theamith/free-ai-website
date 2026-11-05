@@ -27,6 +27,16 @@ type Ui = {
   donePrefix: string;
   pick: string;
   picked: string;
+  nameLabel: string;
+  nameSave: string;
+  nameRule: string;
+  nameLong: string;
+  nameSaved: string;
+  urlLooks: string;
+  urlProject: string;
+  urlSub: string;
+  urlFixed: string;
+  nameNeed: string;
 };
 
 export const ui: Record<Lang, Ui> = {
@@ -51,6 +61,16 @@ export const ui: Record<Lang, Ui> = {
     donePrefix: "Done · ",
     pick: "Use this",
     picked: "Using this",
+    nameLabel: "Address name",
+    nameSave: "Save this name",
+    nameRule: "Use small letters, numbers, and hyphens. Do not start or end with a hyphen.",
+    nameLong: "Use 63 characters or fewer.",
+    nameSaved: "Saved",
+    urlLooks: "The address will look like this",
+    urlProject: "Project name. You choose it. Same as the GitHub repository.",
+    urlSub: "Cloudflare subdomain. Change it later with the pencil. Example: your-name.",
+    urlFixed: "workers.dev. This part cannot change.",
+    nameNeed: "Save an address name in the address lesson first. The copy still contains SITE-NAME until you do.",
   },
   ta: {
     brand: "AI மூலம் இலவச இணையதளம்",
@@ -73,6 +93,16 @@ export const ui: Record<Lang, Ui> = {
     donePrefix: "முடிந்தது · ",
     pick: "இதை பயன்படுத்து",
     picked: "இதை பயன்படுத்துகிறீர்கள்",
+    nameLabel: "முகவரி பெயர்",
+    nameSave: "இந்த பெயரை சேமி",
+    nameRule: "சிறிய ஆங்கில எழுத்து, எண், இடைக்கோடு மட்டும். தொடக்கத்திலும் முடிவிலும் இடைக்கோடு வேண்டாம்.",
+    nameLong: "63 எழுத்துகளுக்கு மேல் வேண்டாம்.",
+    nameSaved: "சேமித்தது",
+    urlLooks: "முகவரி இப்படி இருக்கும்",
+    urlProject: "திட்டப் பெயர். நீங்கள் தேர்ந்தெடுப்பது. GitHub களஞ்சியப் பெயரும் இதுவே.",
+    urlSub: "Cloudflare subdomain. பிறகு பென்சிலால் மாற்றலாம். உதாரணம்: your-name.",
+    urlFixed: "workers.dev. இதை மாற்ற முடியாது.",
+    nameNeed: "முதலில் முகவரி பாடத்தில் பெயரை சேமிக்கவும். அதுவரை நகலில் SITE-NAME இருக்கும்.",
   },
   ml: {
     brand: "AI ഉപയോഗിച്ച് സൗജന്യ വെബ്സൈറ്റ്",
@@ -95,5 +125,15 @@ export const ui: Record<Lang, Ui> = {
     donePrefix: "കഴിഞ്ഞു · ",
     pick: "ഇത് ഉപയോഗിക്കുക",
     picked: "ഇത് ഉപയോഗിക്കുന്നു",
+    nameLabel: "വിലാസത്തിന്റെ പേര്",
+    nameSave: "ഈ പേര് സൂക്ഷിക്കുക",
+    nameRule: "ചെറിയ ഇംഗ്ലീഷ് അക്ഷരം, അക്കം, ഹൈഫൻ മാത്രം. തുടക്കത്തിലും അവസാനത്തിലും ഹൈഫൻ വേണ്ട.",
+    nameLong: "63 അക്ഷരത്തിൽ കൂടരുത്.",
+    nameSaved: "സൂക്ഷിച്ചു",
+    urlLooks: "വിലാസം ഇങ്ങനെ ആയിരിക്കും",
+    urlProject: "പ്രോജക്റ്റ് പേര്. നിങ്ങൾ തിരഞ്ഞെടുക്കുന്നത്. GitHub റിപ്പോസിറ്ററി പേരും ഇതാണ്.",
+    urlSub: "Cloudflare subdomain. പിന്നീട് പെൻസിൽ കൊണ്ട് മാറ്റാം. ഉദാഹരണം: your-name.",
+    urlFixed: "workers.dev. ഇത് മാറ്റാനാവില്ല.",
+    nameNeed: "ആദ്യം വിലാസ പാഠത്തിൽ പേര് സൂക്ഷിക്കുക. അതുവരെ പകർപ്പിൽ SITE-NAME ഉണ്ടാകും.",
   },
 };

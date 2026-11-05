@@ -14,6 +14,7 @@ export type Lesson = {
   note?: string;
   copy?: { label: string; text: string };
   choices?: Choice[];
+  pickUrl?: boolean;
 };
 
 type Fields = {
@@ -25,6 +26,7 @@ type Fields = {
   note?: string;
   copyLabel?: string;
   choices?: Choice[];
+  pickUrl?: boolean;
 };
 
 const prompt = `You are helping a beginner. Do the work yourself. Do not ask me to use a terminal.
@@ -35,7 +37,7 @@ Town: your town
 Phone, country code then number, digits only: 15555550100
 === END REPLACE ===
 
-The website in this class is a small shop. Build that shop as a static website. No build step, no database, no login, no credit card form.
+The website in this class is a small shop. Build that shop as a static website. No database, no login, no credit card form.
 
 Pages:
 1. Home. The website name, one sentence, and a list of products with price, what is in it, and a short honest note. A search box. If the search finds nothing, show a line that says to send Hi on WhatsApp or to call. Buttons for offers. A reviews row that says the reviews are samples until the owner replaces them. A cart. Adding an item changes the button to "Go to cart". The cart has a Close button. Sending the order shows the message, then a button that opens WhatsApp with that message already written, and a button that calls the phone. After that, the cart is empty.
@@ -50,16 +52,40 @@ Pages:
 Every page needs its own title and meta description. Do not add a noindex tag.
 Add robots.txt that allows these pages. Add sitemap.xml that lists them.
 Also create README.md. Put the website name and the town in it.
-Also create .gitignore with exactly these two lines:
+Also create .gitignore with these lines:
+node_modules
+dist
 .DS_Store
 Thumbs.db
-The website files are: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md, .gitignore.
+
+Also create the Cloudflare files below. The AI does this. You do not edit Cloudflare settings by hand, except one box named later in the class.
+package.json
+{
+  "name": "SITE-NAME",
+  "private": true,
+  "scripts": {
+    "build": "node build.mjs"
+  }
+}
+build.mjs creates a dist folder and copies index.html, styles.css, script.js, details.html, robots.txt, and sitemap.xml into dist. Use Node.js only. Do not add packages.
+wrangler.jsonc
+{
+  "name": "SITE-NAME",
+  "compatibility_date": "2026-11-05",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}
+SITE-NAME in package.json and wrangler.jsonc must stay exactly as written. Do not replace it with the shop display name.
+
+The website files are: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md, .gitignore, package.json, build.mjs, wrangler.jsonc.
 If you cannot push, give me every file except .gitignore to download. The GitHub website skips a name that starts with a dot.
 Text first. Photos optional and small. Easy to read on a phone and on a slow connection.
 Do not invent a license number, a Google badge, or fake customer names presented as real.
 Orders go to WhatsApp (https://wa.me/ and then the phone digits) or a phone call. There is no checkout and no card form.
 
-Save this website in my GitHub repository named free-ai-website.
+Save this website in my GitHub repository named SITE-NAME.
 Create that repository if it does not exist. Make it Public.
 Commit and push every file.
 When the push is done, reply with the GitHub address and the words: Pushed to GitHub.
@@ -71,25 +97,26 @@ const copies: Record<string, string> = {
     "Website name: North Market\nTown: your town\nPhone, country code then number, digits only: 15555550100\n\n1. Ceramic mug — $18 — stoneware mug — holds about 300 ml\n2. Linen towel — $24 — washed linen — one towel\n3. Candle — $16 — soy wax — unscented",
   "copy-prompt": prompt,
   "connect-ai":
-    "Create the GitHub repository free-ai-website if it does not exist. Push the website files into it. If you cannot push, reply with the words I cannot push.",
+    "Create the GitHub repository SITE-NAME if it does not exist. Push the website files into it. If you cannot push, reply with the words I cannot push.",
   "link-fix":
-    "Cloudflare is already connected to the GitHub repository free-ai-website. Do not create a new repository. The site is plain HTML in the root. There is no build step. If the build failed, the error text is below. Tell me the one change to make, then commit and push. Reply Pushed to GitHub, or I cannot push. Do not ask for a Cloudflare password or API key.\n\nError:\nPASTE THE RED ERROR HERE",
+    "Cloudflare is already connected to the GitHub repository SITE-NAME. Do not create a new repository. wrangler.jsonc and package.json are already in the project. Do not ask me to change the Cloudflare deploy command. If the build failed, the error text is below. Tell me the one change to make, then commit and push. Reply Pushed to GitHub, or I cannot push. Do not ask for a Cloudflare password or API key.\n\nError:\nPASTE THE RED ERROR HERE",
   deploy:
-    "My website is live at this address: PASTE YOUR pages.dev ADDRESS. Stay in this same chat. When you push, tell me to refresh this address. You cannot see Cloudflare.",
+    "My website address is: PASTE THE workers.dev ADDRESS. Stay in this same chat. When you push, Cloudflare builds a new version by itself. Tell me to wait for Success, then refresh this address. You cannot see Cloudflare.",
   update:
-    "In this same chat: change only the mug price to $20. Commit and push to the GitHub repository free-ai-website. Reply Pushed to GitHub, or I cannot push. Do not say Cloudflare is finished.",
+    "In this same chat: change only the mug price to $20. Commit and push to the GitHub repository SITE-NAME. Reply Pushed to GitHub, or I cannot push. Do not say Cloudflare is finished.",
   titles:
-    "Give the home page a title and a meta description that use my website name and town. Give the business details page a different title and description. Do not add noindex. Commit and push to free-ai-website. Reply Pushed to GitHub, or I cannot push.",
+    "Give the home page a title and a meta description that use my website name and town. Give the business details page a different title and description. Do not add noindex. Commit and push to SITE-NAME. Reply Pushed to GitHub, or I cannot push.",
   noindex:
-    "Remove every noindex tag. I want search engines to list this website. Commit and push to free-ai-website. Reply Pushed to GitHub, or I cannot push.",
+    "Remove every noindex tag. I want search engines to list this website. Commit and push to SITE-NAME. Reply Pushed to GitHub, or I cannot push.",
   analytics:
-    "Add this Google Analytics 4 measurement id to every page, in the head: G-XXXXXXXX. Do not add noindex. Commit and push to free-ai-website. Reply Pushed to GitHub, or I cannot push.",
+    "Add this Google Analytics 4 measurement id to every page, in the head: G-XXXXXXXX. Do not add noindex. Commit and push to SITE-NAME. Reply Pushed to GitHub, or I cannot push.",
 };
 
 const order = [
   "welcome",
   "scope",
   "github-account",
+  "site-name",
   "choose-ai",
   "where-to-type",
   "pin-chat",
@@ -120,6 +147,7 @@ const videos: Record<string, string> = {
   welcome: "/tutorials/welcome.mp4",
   scope: "/tutorials/scope.mp4",
   "github-account": "/tutorials/github-account.mp4",
+  "site-name": "/tutorials/site-name.mp4",
   "cloudflare-account": "/tutorials/cloudflare-account.mp4",
   "choose-ai": "/tutorials/choose-ai.mp4",
   "where-to-type": "/tutorials/where-to-type.mp4",
@@ -131,7 +159,7 @@ const videos: Record<string, string> = {
   upload: "/tutorials/upload.mp4",
   connect: "/tutorials/connect.mp4",
   "link-fix": "/tutorials/link-fix.mp4",
-  deploy: "/tutorials/connect.mp4",
+  deploy: "/tutorials/deploy.mp4",
   "the-order": "/tutorials/the-order.mp4",
   update: "/tutorials/update.mp4",
   titles: "/tutorials/scope.mp4",
@@ -152,7 +180,7 @@ const en: Record<string, Fields> = {
     title: "What this class is",
     goal: "A free website. No bill, and no credit card, unless you choose the paid ChatGPT path.",
     steps: [
-      "First make a free GitHub account. Then pick Grok or ChatGPT and connect GitHub to that AI.",
+      "First make a free GitHub account. Then choose the web address. That name is the GitHub repository.",
       "Then send the prompt in that same chat and let the AI push the website to GitHub.",
       "Only after the push: make the free Cloudflare account, then connect that one GitHub repository.",
       "You do not use a terminal. You do not type a password into the chat. You do not paste a Cloudflare setup prompt.",
@@ -186,6 +214,20 @@ const en: Record<string, Fields> = {
     see: "You are signed in. Your username shows in the corner.",
     note: "The video is the real GitHub home page. Click Sign up. The form then asks for your email, a password, and a username. That form blocks a recording.",
   },
+  "site-name": {
+    part: "Address",
+    title: "Choose the web address",
+    goal: "The name you save here is the first part of the address, and the GitHub repository name.",
+    steps: [
+      "Type a short name in the box. Small letters, numbers, and hyphens only. Example: apple-orange.",
+      "The line under the box is the address. apple-orange is the project name. your-name is the Cloudflare subdomain. workers.dev never changes.",
+      "Save. Copying a prompt later fills this name in. You do not type it again.",
+      "On Cloudflare, the pencil beside Subdomain changes only the middle part. The video shows that screen. It moves every site on the account.",
+    ],
+    see: "A valid name is saved, and the address line shows it.",
+    note: "North Market is the name on the page. apple-orange is the address. They are not the same.",
+    pickUrl: true,
+  },
   "cloudflare-account": {
     part: "Cloudflare",
     title: "Create the Cloudflare account",
@@ -196,6 +238,7 @@ const en: Record<string, Fields> = {
       "Tick Verify you are human. Click Sign up.",
       "Open the email from Cloudflare and confirm it.",
       "You should see Account home, with the words Ready when you are. If it asks for a card, do not enter one.",
+      "Optional: open Workers & Pages. The pencil beside Subdomain changes the middle of the address. workers.dev stays. This moves every site on the account.",
     ],
     see: "You are on the Cloudflare home screen. No card was added.",
     note: "The video is the real sign-up screen, then the real home screen.",
@@ -264,7 +307,7 @@ const en: Record<string, Fields> = {
       "Never type your GitHub password into the box.",
       "If the reply says I cannot push, use the two manual lessons after the prompt. Skip them if it really pushed.",
     ],
-    see: "GitHub shows a repository named free-ai-website, or the reply says I cannot push.",
+    see: "GitHub shows a repository with the name you saved, or the reply says I cannot push.",
     copyLabel: "Copy the question",
   },
   "prompt-parts": {
@@ -275,7 +318,7 @@ const en: Record<string, Fields> = {
       "The blocks that say REPLACE are the only parts you change.",
       "Website name, town, and phone. The phone is country code plus number, digits only. Example: 15551234567.",
       "The product lines. Each line is name, price, what it is, and one honest note.",
-      "Leave the GitHub lines and the file names as they are.",
+      "Leave the GitHub lines and the file names as they are. The copy button fills your saved address name.",
     ],
     see: "Your name, town, phone, and products are in the prompt. The rest still matches.",
     note: "English is easier for Grok and ChatGPT to follow. You do not translate the prompt.",
@@ -297,14 +340,14 @@ const en: Record<string, Fields> = {
   "github-repo": {
     part: "First push",
     title: "Create the repository only if asked",
-    goal: "Skip this if the AI already created free-ai-website.",
+    goal: "Skip this if the AI already created the repository with your saved name.",
     steps: [
       "On GitHub, click the + , then New repository.",
-      "Name: free-ai-website. Choose Public.",
+      "Name: the name you saved. Example: apple-orange. Choose Public.",
       "Do not tick Add a README or Add .gitignore. The AI creates those files. Ticking them here can block the first push.",
       "Click Create repository.",
     ],
-    see: "The page says your name / free-ai-website, or you skipped this lesson.",
+    see: "The page says your username / your saved name, or you skipped this lesson.",
     note: "The video is GitHub's own picture of this screen. Your page has the same buttons: the +, New repository, Public, and Create repository.",
   },
   upload: {
@@ -313,7 +356,7 @@ const en: Record<string, Fields> = {
     goal: "A fallback. The GitHub website is clumsy with many files.",
     steps: [
       "Skip this if the reply said Pushed to GitHub.",
-      "Ask in the same chat for a download of these files: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md.",
+      "Ask in the same chat for a download of these files: index.html, styles.css, script.js, details.html, robots.txt, sitemap.xml, README.md, package.json, build.mjs, wrangler.jsonc.",
       "Do not wait for .gitignore. The GitHub website skips names that start with a dot. The website still works without that file.",
       "On the repository, click Add file, then Upload files. Drag those files. Commit changes.",
     ],
@@ -330,11 +373,14 @@ const en: Record<string, Fields> = {
       "Click the blue Create application button.",
       "Click Connect GitHub. Do not click Hello World, a template, or Upload your static files.",
       "On GitHub, choose Only select repositories. Do not choose All repositories.",
-      "Open Select repositories and pick only free-ai-website. Click Install & Authorize.",
-      "Cloudflare will not invent the right build for this plain website. If it asks: Framework preset None. Leave the build command empty. If an empty command will not save, type exit 0. Build output directory: /",
+      "Open Select repositories and pick only the repository with your saved name. Click Install & Authorize.",
+      "On the next screen, the project name must match that repository. Cloudflare usually fills it. Fix it only if it does not match.",
+      "Build command is the only box you type in. Type npm run build. Leave Deploy command as npx wrangler deploy. Leave Preview command as it is.",
+      "Leave Enable Preview builds on. Leave Protect with Cloudflare Access off. Do not open Advanced. Click Deploy.",
+      "Wait while it says Setting up your repository.",
     ],
-    see: "Cloudflare starts a deployment for free-ai-website.",
-    note: "The video is the real Cloudflare screen, then the real GitHub permission screen.",
+    see: "A deployment starts for your repository. You did not change the deploy command.",
+    note: "The video is the real Cloudflare screen: pick the repository, the project name, the build box, and Deploy.",
   },
   "link-fix": {
     part: "Cloudflare",
@@ -342,9 +388,9 @@ const en: Record<string, Fields> = {
     goal: "Skip this if Install & Authorize worked.",
     steps: [
       "On GitHub, open Settings, then Applications.",
-      "Find the Cloudflare app. Uninstall it, or remove free-ai-website and save.",
+      "Find the Cloudflare app. Uninstall it, or remove your repository and save.",
       "Go back to Cloudflare. Click Create application, then Connect GitHub again.",
-      "Again choose Only select repositories, and only free-ai-website. Click Install & Authorize.",
+      "Again choose Only select repositories, and only your saved repository. Click Install & Authorize.",
       "If a build still fails, paste the red error into the pinned chat with the note below.",
     ],
     see: "The repository is selected, or you skipped this because the link already worked.",
@@ -354,14 +400,15 @@ const en: Record<string, Fields> = {
   deploy: {
     part: "Cloudflare",
     title: "Check the first publish",
-    goal: "The website is on the internet. Confirm it before you change anything.",
+    goal: "The website is on the internet. The address can take a few minutes to open.",
     steps: [
-      "Wait until Cloudflare says Success.",
-      "Open the address that ends in pages.dev. On your phone, open it again.",
-      "Check the products, search, cart, WhatsApp, and call.",
-      "Paste that address into the pinned chat with the note below, so later replies can name it. The AI still cannot see Cloudflare.",
+      "Wait until the log says Success. Build completed. The address is in that log. It looks like https://apple-orange.your-name.workers.dev.",
+      "Wait a few minutes, then open that address on your computer and on your phone.",
+      "If the browser says it cannot make a secure connection, wait and try the same address again. Do not click Advanced.",
+      "If the website opens but looks wrong, go to the pinned chat and ask for a fix. After Pushed to GitHub, Cloudflare builds a new version by itself. You do not click Deploy again.",
+      "When the new build says Success, refresh. Then paste the address into the pinned chat with the note below.",
     ],
-    see: "The website loads. It is not a Cloudflare error page.",
+    see: "The website loads. It is not a browser warning and not a Cloudflare error page.",
     copyLabel: "Copy what to tell the AI",
   },
   "the-order": {
@@ -371,8 +418,8 @@ const en: Record<string, Fields> = {
     steps: [
       "1. Open the pinned chat. Type in the same bottom box. Do not click New chat.",
       "2. Wait until the reply says Pushed to GitHub.",
-      "3. Cloudflare publishes that push by itself. You do not upload files to Cloudflare again.",
-      "The AI can confirm GitHub. It cannot see Cloudflare. You look for Success, refresh the pages.dev address, then tell the chat if the website shows the change.",
+      "3. Cloudflare builds a new version by itself. You do not click Deploy again, and you do not upload files to Cloudflare.",
+      "The AI can confirm GitHub. It cannot see Cloudflare. You wait for Success, refresh the workers.dev address, then tell the chat if the website shows the change.",
     ],
     see: "You can say the three steps without looking them up.",
   },
@@ -383,7 +430,7 @@ const en: Record<string, Fields> = {
     steps: [
       "In the pinned chat, paste the message below.",
       "Wait for Pushed to GitHub. If it says I cannot push, use the upload lesson, then come back.",
-      "Open Cloudflare. A new deployment starts on its own. Wait for Success.",
+      "Open Cloudflare. A new build starts on its own. Wait for Success. Build completed.",
       "Refresh the website. If the price is old, wait two minutes and refresh again.",
       "Reply in the same chat: it is live, or it is not live yet.",
     ],
@@ -406,7 +453,7 @@ const en: Record<string, Fields> = {
     title: "robots.txt and the sitemap",
     goal: "Google is allowed to read the website.",
     steps: [
-      "Open your pages.dev address with /robots.txt on the end. You should see Allow, not Disallow: /.",
+      "Open your workers.dev address with /robots.txt on the end. You should see Allow, not Disallow: /.",
       "Open the address with /sitemap.xml on the end. You should see both pages.",
       "If a file is missing, ask in the pinned chat, then wait for Cloudflare Success.",
     ],
@@ -429,7 +476,7 @@ const en: Record<string, Fields> = {
     title: "Google Search Console",
     goal: "Tell Google the website exists. Free.",
     steps: [
-      "Open search.google.com/search-console. Add a property. Choose URL prefix. Paste your https pages.dev address.",
+      "Open search.google.com/search-console. Add a property. Choose URL prefix. Paste your https workers.dev address.",
       "Google shows a tag. Paste that tag into the pinned chat and ask for a push.",
       "After Cloudflare says Success, click Verify. Then submit sitemap.xml.",
     ],
@@ -464,7 +511,7 @@ const en: Record<string, Fields> = {
     title: "A speed score, not a badge",
     goal: "Check that the website is light.",
     steps: [
-      "Open pagespeed.web.dev. Paste your pages.dev address. Click Analyze.",
+      "Open pagespeed.web.dev. Paste your workers.dev address. Click Analyze.",
       "Read the mobile number. If it is low, ask in the pinned chat to remove large photos and push.",
       "Do not add a badge that says Google verified or Google recommended. There is no such badge.",
     ],
@@ -477,7 +524,7 @@ const en: Record<string, Fields> = {
     steps: [
       "Skip this for a practice website.",
       "The owner opens business.google.com with the shop’s own Google account.",
-      "Add the shop name, town, phone, hours, and the pages.dev address.",
+      "Add the shop name, town, phone, hours, and the workers.dev address.",
       "Wait for Google’s postcard or video. Do not invent a code.",
     ],
     see: "The listing matches the website, or you skipped this.",
@@ -488,8 +535,8 @@ const en: Record<string, Fields> = {
     title: "Your own website name",
     goal: "Only if you later buy a domain. This part costs money.",
     steps: [
-      "Skip this if you are staying on pages.dev.",
-      "In the Pages project, add the name without www, then add www.",
+      "Skip this if you are staying on workers.dev.",
+      "On the worker, open Domains, then Add. Enter the name you bought.",
       "Send www.yourname.com to https://yourname.com with one redirect rule, status 301.",
     ],
     see: "The name without www opens the website. The www name jumps to it.",
@@ -525,6 +572,7 @@ export function lessonsFor(lang: Lang): Lesson[] {
       see: fields.see,
       note: fields.note,
       choices: fields.choices,
+      pickUrl: fields.pickUrl,
       copy: text ? { label: fields.copyLabel ?? en[id].copyLabel ?? "Copy", text } : undefined,
     };
   });

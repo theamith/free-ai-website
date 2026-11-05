@@ -1,0 +1,87 @@
+@import "@fontsource/noto-sans/400.css";
+@import "@fontsource/noto-sans/600.css";
+@import "@fontsource/noto-sans/700.css";
+@import "@fontsource/noto-sans-tamil/400.css";
+@import "@fontsource/noto-sans-tamil/600.css";
+@import "@fontsource/noto-sans-tamil/700.css";
+@import "@fontsource/noto-sans-malayalam/400.css";
+@import "@fontsource/noto-sans-malayalam/600.css";
+@import "@fontsource/noto-sans-malayalam/700.css";
+@import "tailwindcss";
+
+:root {
+  --paper: #f3efe6;
+  --ink: #1c1915;
+  --muted: #5c564c;
+  --line: #e0d5c4;
+  --copper: #9a3412;
+  --on-copper: #fffdf8;
+  --card: #fffcf8;
+  --on-ink: #fffdf8;
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --paper: #12110e;
+  --ink: #f4efe6;
+  --muted: #c8bfb2;
+  --line: #3a342c;
+  --copper: #e39a62;
+  --on-copper: #1c120c;
+  --card: #1c1916;
+  --on-ink: #14120f;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-copper: var(--copper);
+  --color-on-copper: var(--on-copper);
+  --color-card: var(--card);
+  --color-on-ink: var(--on-ink);
+  --font-sans: "Noto Sans", "Noto Sans Tamil", "Noto Sans Malayalam", sans-serif;
+  --radius-card: 0.875rem;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-weight: 700;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
